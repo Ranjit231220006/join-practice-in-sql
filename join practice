@@ -1,0 +1,49 @@
+CREATE TABLE Students (
+    student_id INT PRIMARY KEY,
+    name VARCHAR(50)
+);
+
+INSERT INTO Students VALUES 
+(1, 'Ranjit Kumar Mishra'),
+(2, 'Priya Sharma'),
+(3, 'Aman Kumar'),
+(4, 'Neha Verma'),
+(5, 'Arjun Singh');
+
+CREATE TABLE Marks (
+    student_id INT,
+    subject VARCHAR(50),
+    marks INT
+);
+
+INSERT INTO Marks VALUES 
+(1, 'DBMS', 88),
+(1, 'Operating System', 92),
+(2, 'AI Fundamentals', 90),
+(3, 'Data Communication', 76),
+(5, 'Python Programming', 82);
+
+SELECT s.student_id, s.name, m.subject, m.marks
+FROM Students s
+INNER JOIN Marks m
+ON s.student_id = m.student_id;
+
+SELECT s.student_id, s.name, m.subject, m.marks
+FROM Students s
+LEFT JOIN Marks m
+ON s.student_id = m.student_id;
+
+SELECT s.student_id, s.name, m.subject, m.marks
+FROM Students s
+RIGHT JOIN Marks m
+ON s.student_id = m.student_id;
+
+SELECT s.student_id, s.name, m.subject, m.marks
+FROM Students s
+LEFT JOIN Marks m
+ON s.student_id = m.student_id
+UNION
+SELECT s.student_id, s.name, m.subject, m.marks
+FROM Students s
+RIGHT JOIN Marks m
+ON s.student_id = m.student_id;

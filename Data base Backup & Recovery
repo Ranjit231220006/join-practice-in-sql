@@ -1,0 +1,15 @@
+CREATE DATABASE backup_demo;
+USE backup_demo;
+
+CREATE TABLE Students (
+    student_id INT PRIMARY KEY,
+    name VARCHAR(50),
+    course VARCHAR(50)
+);
+
+INSERT INTO Students VALUES
+(1, 'Ranjit Kumar Mishra', 'BCA'),
+(2, 'Priya Sharma', 'MCA'),
+(3, 'Aman Kumar', 'B.Tech');
+
+SELECT * FROM Students;

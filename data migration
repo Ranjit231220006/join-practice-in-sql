@@ -1,0 +1,49 @@
+CREATE TABLE Sales (
+    sale_id INT PRIMARY KEY,
+    customer_name VARCHAR(50),
+    product VARCHAR(50),
+    amount DECIMAL(10,2),
+    sale_date DATE
+);
+
+INSERT INTO Sales VALUES
+(1, 'Ranjit Kumar Mishra', 'Laptop', 75000, '2025-01-05'),
+(2, 'Priya Sharma', 'Mobile', 25000, '2025-01-10'),
+(3, 'Aman Kumar', 'Tablet', 18000, '2025-01-15'),
+(4, 'Neha Verma', 'Laptop', 80000, '2025-02-01'),
+(5, 'Arjun Singh', 'Headphones', 4000, '2025-02-05'),
+(6, 'Ranjit Kumar Mishra', 'Mobile', 28000, '2025-02-10'),
+(7, 'Priya Sharma', 'Tablet', 20000, '2025-02-15'),
+(8, 'Aman Kumar', 'Laptop', 72000, '2025-03-01');
+
+SELECT customer_name, SUM(amount) AS total_spent
+FROM Sales
+GROUP BY customer_name
+ORDER BY total_spent DESC;
+
+SELECT customer_name, product, amount,
+       RANK() OVER(PARTITION BY product ORDER BY amount DESC) AS rank_in_product
+FROM Sales;
+
+SELECT customer_name, AVG(amount) AS avg_purchase
+FROM Sales
+GROUP BY customer_name
+HAVING AVG(amount) > 20000;
+
+WITH MonthlySales AS (
+    SELECT DATE_TRUNC('month', sale_date) AS month,
+           SUM(amount) AS total_sales
+    FROM Sales
+    GROUP BY DATE_TRUNC('month', sale_date)
+)
+SELECT month, total_sales
+FROM MonthlySales
+ORDER BY month;
+
+SELECT customer_name, product, amount
+FROM Sales s1
+WHERE amount > (
+    SELECT AVG(amount) 
+    FROM Sales s2
+    WHERE s2.product = s1.product
+);
